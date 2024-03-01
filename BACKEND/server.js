@@ -2,7 +2,7 @@ import express from "express";
 import { json } from "express";
 import dotenv from "dotenv";
 
-import mongoose from "mongoose"; // Import mongoose
+import mongoose from "mongoose";
 
 dotenv.config();
 
