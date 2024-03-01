@@ -1,0 +1,126 @@
+import { Schema, model } from "mongoose";
+import { randomBytes, createHash } from "crypto";
+const userSchema = new Schema(
+  {
+    // Basic user information
+    username: {
+      type: String,
+      required: true,
+    },
+    profilePicture: {
+      type: Object,
+      default: null,
+    },
+    email: {
+      type: String,
+      required: false, // Set to false if email is not mandatory
+    },
+    isBlocked: {
+      type: Boolean,
+      default: false,
+    },
+    password: {
+      type: String,
+      required: false, // Set to false if password is not mandatory
+    },
+    role: {
+      type: String,
+      default: "user",
+    },
+    googleId: {
+      type: String,
+      required: false, // Required only for users logging in with Google
+    },
+    authMethod: {
+      type: String,
+      enum: ["google", "local", "facebook", "github"],
+      required: true,
+      default: "local",
+    },
+
+    accountVerificationToken: {
+      type: String,
+      default: null,
+    },
+    accountVerificationToken: {
+      type: String,
+      default: null,
+    },
+    accountVerificationExpires: {
+      type: Date,
+      default: null,
+    },
+    passwordResetExpires: {
+      type: Date,
+      default: null,
+    },
+    passwordResetToken: {
+      type: String,
+      default: null,
+    },
+    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+    totalEarnings: { type: Number, default: 0 },
+    nextEarningDate: {
+      type: Date,
+      default: () =>
+        new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1), // Sets to the first day of the next month
+    },
+    plan: {
+      type: Schema.Types.ObjectId,
+      ref: "Plan",
+    },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    payments: [{ type: Schema.Types.ObjectId, ref: "Payment" }],
+    hasSelectedPlan: { type: Boolean, default: false },
+    lastLogin: { type: Date, default: Date.now },
+    //Account type
+    accountType: {
+      type: String,
+      default: "Basic",
+    },
+    // User relationships
+    followers: [{ type: Schema.Types.ObjectId, ref: "User" }], // Link to other users
+    following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  },
+  { timestamps: true }
+);
+//! Generate token for account verification
+userSchema.methods.generateAccVerificationToken = function () {
+  const emailToken = randomBytes(20).toString("hex");
+  //assign the token to the user
+  this.passwordResetToken = createHash("sha256")
+    .update(emailToken)
+    .digest("hex");
+
+  this.accountVerificationExpires = Date.now() + 10 * 60 * 1000; //10 minutes
+  return emailToken;
+};
+//! Generate token for password reset
+userSchema.methods.generatePasswordResetToken = function () {
+  const emailToken = randomBytes(20).toString("hex");
+  //assign the token to the user
+  this.passwordResetToken = createHash("sha256")
+    .update(emailToken)
+    .digest("hex");
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000; //10 minutes
+  return emailToken;
+};
+//Method to update user accountType
+userSchema.methods.updateAccountType = function () {
+  //get the total posts
+  const postCount = this.posts.length;
+  if (postCount >= 50) {
+    this.accountType = "Premium";
+  } else if (postCount >= 10) {
+    this.accountType = "Standard";
+  } else {
+    this.accountType = "Basic";
+  }
+};
+const User = model("User", userSchema);
+
+export default User;
