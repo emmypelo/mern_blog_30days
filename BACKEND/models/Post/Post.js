@@ -10,7 +10,7 @@ const postSchema = new Schema(
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      // required: true,
     },
     nextEarningDate: {
       type: Date,
@@ -23,7 +23,7 @@ const postSchema = new Schema(
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
+      // required: true,
     },
     viewsCount: { type: Number, default: 0 },
     // Interactions
