@@ -1,12 +1,21 @@
 import "./App.css";
-import CreatePost from "./components/CreatePost";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CreatePost from "./components/posts/CreatePost";
+import FetchPost from "./components/posts/FetchPost";
+import PublicNavbar from "./components/Navbar/PublicNavbar";
+import PostDetails from "./components/posts/postDetails";
 
 function App() {
   return (
-    <>
-      <h1>MY BLOG</h1>
-      <CreatePost />
-    </>
+    <BrowserRouter>
+      <PublicNavbar />
+      <Routes>
+        <Route path="/" element={<p>HOME</p>} />
+        <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/list-posts" element={<FetchPost />} />
+        <Route path="/posts/:postId" element={<PostDetails />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
