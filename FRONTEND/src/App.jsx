@@ -1,4 +1,6 @@
+import "./index.css";
 import "./App.css";
+import "react-quill/dist/quill.snow.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreatePost from "./components/posts/CreatePost";
 import FetchPost from "./components/posts/FetchPost";

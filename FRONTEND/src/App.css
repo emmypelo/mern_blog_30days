@@ -1,0 +1,34 @@
+body {
+  background-color: #211951;
+  color: white;
+  padding: 5px;
+}
+.ql-toolbar .ql-stroke {
+  fill: none !important;
+  stroke: #fff !important;
+  color: #fff !important;
+}
+
+.ql-toolbar .ql-fill {
+  fill: #fff !important;
+  stroke: none !important;
+  color: #fff !important;
+}
+.ql-toolbar:hover .ql-fill:hover {
+  fill: #fff !important;
+  stroke: none !important;
+  color: #ffffff !important;
+}
+
+.ql-toolbar .ql-picker .ql-picker-label {
+  color: #fff !important;
+  color: #fff !important;
+}
+
+/* .ql-toolbar:hover .ql-picker:hover .ql-picker-label:hover {
+  color: #599eec !important;
+} */
+.quill {
+  max-width: 100%;
+  height: 200px;
+}

@@ -1,13 +1,14 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deletePostApi, fetchPostsApi } from "../../APIrequests/posts/postAPI";
 import { Link } from "react-router-dom";
+import parse from "html-react-parser";
 
 const FetchPost = () => {
   const { isLoading, isSuccess, data, error, refetch } = useQuery({
     queryKey: ["fetchPost"],
     queryFn: fetchPostsApi,
   });
-  console.log(data);
+  // console.log(data);
 
   // Delete mutation
   const deleteMutation = useMutation({
@@ -32,7 +33,7 @@ const FetchPost = () => {
         return (
           <div key={post._id}>
             <h2>{post.title}</h2>
-            <p>{post.description}</p>
+            <div> {parse(post?.description)}</div>
             <button>
               <Link to={`/posts/${post?._id}`}>View</Link>
             </button>
