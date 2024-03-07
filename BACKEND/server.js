@@ -1,18 +1,19 @@
+dotenv.config();
 import express from "express";
+
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import postRouter from "./routes/posts/postRouter.js";
-
-dotenv.config();
+import bodyParser from "body-parser";
 
 // create Express instance in app
 const app = express();
 
-const port = process.env.PORT;
-
 app.use(express.json());
-// cors configuration
+app.use(bodyParser.json());
+const port = process.env.PORT;
+app.use(bodyParser.urlencoded({ extended: false }));
 const corsOptions = {
   origin: ["http://localhost:5173"],
   credentials: true,

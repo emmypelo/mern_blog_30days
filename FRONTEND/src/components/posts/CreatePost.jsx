@@ -5,9 +5,12 @@ import ReactQuill from "react-quill";
 import { createPostApi } from "../../APIrequests/posts/postAPI";
 import { useState } from "react";
 import { toolbarOptions } from "../../utilities/quillToolbar";
+import { FaTimesCircle } from "react-icons/fa";
 
 const CreatePost = () => {
   const [description, setDescription] = useState("");
+  const [imageErr, setImageErr] = useState("");
+  const [imagePreview, setImagePreview] = useState(null);
 
   // post mutation
   const postMutation = useMutation({
@@ -16,31 +19,47 @@ const CreatePost = () => {
   });
 
   const formik = useFormik({
-    // set initial form values
-    initialValues: { title: "", description: "" },
-    // set validation with yup
+    initialValues: { title: "", description: "", image: "" },
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
       description: Yup.string().required("Description is required"),
+      image: Yup.string(),
     }),
-    // Create on submit function
     onSubmit: (values) => {
-      console.log(values);
-      postMutation.mutate(values);
+      //form data
+      const formData = new FormData();
+
+      formData.append("title", values.title);
+      formData.append("description", description);
+      formData.append("image", values.image);
+      console.log(formData);
+      postMutation.mutate(formData);
     },
   });
 
-  // Customize the toolbar options
+  const handleFileChange = (event) => {
+    console.log(event);
+    const file = event.currentTarget.files[0];
+    if (file.size > 1048576) {
+      setImageErr("File size exceed 1MB");
+      return;
+    }
+    if (
+      !["image/jpeg", "image/jpg", "image/png", "image/gif"].includes(file.type)
+    ) {
+      setImageErr("Invalid file type");
+    }
+    formik.setFieldValue("image", file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const removeImage = () => {
+    formik.setFieldValue("image", null);
+    setImagePreview(null);
+  };
+
   const modules = {
     toolbar: toolbarOptions,
-    //  [
-    //   [{ header: [1, 2, false] }],
-    //   ["bold", "italic", "underline", "strike", "blockquote"],
-    //   [{ list: "ordered" }, { list: "bullet" }],
-    //   ["link", "image"],
-    //   [{ "code-block": true }],
-    //   ["clean"],
-    // ]
   };
   const formats = [
     "header",
@@ -59,33 +78,71 @@ const CreatePost = () => {
   return (
     <div className="flex flex-col w-[95vw] items-center mx-auto min-h-[600px]">
       <h2 className="mb-3">Create a new Post</h2>
-      <form onSubmit={formik.handleSubmit} className="">
+      <form
+        onSubmit={formik.handleSubmit}
+        className=""
+        encType="multipart/form-data"
+      >
         <input
           type="text"
           name="title"
           id="title"
-          placeholder="title"
+          placeholder="Title"
           {...formik.getFieldProps("title")}
           className="flex flex-col mb-3 w-full "
         />
+        <div className="flex justify-center items-center w-full">
+          <input
+            id="images"
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+          <label
+            htmlFor="images"
+            className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600"
+          >
+            Choose a file
+          </label>
+        </div>
+        {formik.touched.image && formik.errors.image && (
+          <p className="text-sm text-red-600">{formik.errors.image}</p>
+        )}
+        {imageErr && <p className="text-sm text-red-600">{imageErr}</p>}
+        {imagePreview && (
+          <div className="mt-2 relative">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="mt-2 h-24 w-24 object-cover rounded-full"
+            />
+            <button
+              onClick={removeImage}
+              className="absolute right-0 top-0 transform translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-1"
+            >
+              <FaTimesCircle className="text-red-500" />
+            </button>
+          </div>
+        )}
         <div className="text-white w-[100%]">
           <ReactQuill
             className=""
             theme="snow"
             modules={modules}
             formats={formats}
-            value={description} // Updated to use 'description' state directly
+            value={description}
             onChange={(value) => {
               setDescription(value);
               formik.setFieldValue("description", value);
             }}
           />
         </div>
-
         <input
           type="submit"
-          className=" mx-auto bg-blue-400 mt-[80px] w-full"
-          value="Create Post "
+          className="mx-auto bg-blue-400 mt-[80px] w-full"
+          value="Create Post"
         />
         {formik.touched.title && formik.errors.title && (
           <p className="text-red-500">{formik.errors.title}</p>

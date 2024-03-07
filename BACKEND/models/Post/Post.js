@@ -5,12 +5,11 @@ const postSchema = new Schema(
     title: { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },
     image: {
-      type: Object,
+      type: {},
     },
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      // required: true,
     },
     nextEarningDate: {
       type: Date,
@@ -23,7 +22,6 @@ const postSchema = new Schema(
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
-      // required: true,
     },
     viewsCount: { type: Number, default: 0 },
     // Interactions
