@@ -1,13 +1,10 @@
 import { Router } from "express";
-import multer from "multer";
 import postController from "../../controller/posts/postController.js";
-import storage from "../../utilities/fileUpload.js";
 
-const upload = multer({ storage });
 const postRouter = Router();
 
 postRouter
-  .post("/posts/create", upload.single("image"), postController.createPost)
+  .post("/posts/create", postController.createPost)
   .get("/posts", postController.fetchAllPosts)
   .get("/posts/:postId", postController.fetchOnePost)
   .put("/posts/:postId", postController.updatePost)
