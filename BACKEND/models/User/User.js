@@ -1,9 +1,14 @@
 import { Schema, model } from "mongoose";
 import { randomBytes, createHash } from "crypto";
+
 const userSchema = new Schema(
   {
     // Basic user information
-    username: {
+    name: {
+      type: String,
+      required: true,
+    },
+    userName: {
       type: String,
       required: true,
     },

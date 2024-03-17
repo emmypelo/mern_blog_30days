@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 
 const postSchema = new Schema(
+  // here
   {
     title: { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },

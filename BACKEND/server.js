@@ -3,6 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import postRouter from "./routes/posts/postRouter.js";
+import userRouter from "./routes/user/userRouter.js";
+import passport from "passport";
+import localStrategy from "./utilities/passportConfig.js";
 
 dotenv.config();
 
@@ -19,9 +22,12 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));
+app.use(passport.initialize());
+localStrategy();
 
 // Routes
 app.use("/api", postRouter);
+app.use("/api", userRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Route not fouund on the server" });
