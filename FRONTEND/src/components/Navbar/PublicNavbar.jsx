@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const PublicNavbar = () => {
   return (
-    <nav className="bg-[#211951] flex w-full items-center h-6 border-b-2 border-[#8c9ee6] p-2">
+    <nav className="bg-[#292735] flex w-full items-center h-6 border-b-2 border-[#8c9ee6] p-2">
       <div className="w-1/3">
         <h1>LOGO</h1>
       </div>

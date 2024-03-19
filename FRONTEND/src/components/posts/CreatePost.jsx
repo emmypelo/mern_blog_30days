@@ -89,7 +89,7 @@ const CreatePost = () => {
           id="title"
           placeholder="Title"
           {...formik.getFieldProps("title")}
-          className="flex flex-col mb-3 w-full "
+          className="flex flex-col mb-3 border-[1.5px] rounded-sm  w-full bg-transparent "
         />
         <div className="flex justify-center items-center w-full">
           <input
@@ -102,9 +102,9 @@ const CreatePost = () => {
           />
           <label
             htmlFor="images"
-            className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600"
+            className="cursor-pointer bg-blue-500 mb-3 text-white px-2 py-1 rounded shadow hover:bg-blue-600"
           >
-            Choose a file
+            Select post Image
           </label>
         </div>
         {formik.touched.image && formik.errors.image && (
@@ -112,17 +112,17 @@ const CreatePost = () => {
         )}
         {imageErr && <p className="text-sm text-red-600">{imageErr}</p>}
         {imagePreview && (
-          <div className="mt-2 relative">
+          <div className="relative flex w-4/5 mx-auto mb-3">
             <img
               src={imagePreview}
               alt="Preview"
-              className="mt-2 h-24 w-24 object-cover rounded-full"
+              className="mt-2  w-full object-cover"
             />
             <button
               onClick={removeImage}
-              className="absolute right-0 top-0 transform translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-1"
+              className="absolute right-2 top-2 transform translate-x-1/2 -translate-y-1/2 bg-red-400 rounded-full p-1 hover:bg-red-600"
             >
-              <FaTimesCircle className="text-red-500" />
+              <FaTimesCircle className="text-white" />
             </button>
           </div>
         )}
@@ -141,7 +141,7 @@ const CreatePost = () => {
         </div>
         <input
           type="submit"
-          className="mx-auto bg-blue-400 mt-[80px] w-full"
+          className="cursor-pointer w-2/5 items-center  justify-center bg-blue-500 flex mx-auto mt-20 text-white px-2 py-1 rounded shadow hover:bg-blue-600"
           value="Create Post"
         />
         {formik.touched.title && formik.errors.title && (

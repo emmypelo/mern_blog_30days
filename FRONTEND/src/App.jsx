@@ -6,6 +6,8 @@ import CreatePost from "./components/posts/CreatePost";
 import FetchPost from "./components/posts/FetchPost";
 import PublicNavbar from "./components/Navbar/PublicNavbar";
 import PostDetails from "./components/posts/postDetails";
+import Login from "./components/users/Login";
+import Register from "./components/users/Register";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/" element={<p>HOME</p>} />
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/list-posts" element={<FetchPost />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/posts/:postId" element={<PostDetails />} />
       </Routes>
     </BrowserRouter>

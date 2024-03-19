@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { postDetailsApi, updatePostApi } from "../../APIrequests/posts/postAPI";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
+import parse from "html-react-parser";
 
 import * as Yup from "yup";
 import { useState } from "react";
@@ -58,7 +59,7 @@ const PostDetails = () => {
         {isSuccess && <p>Posts Details</p>}
         {error && <p>{error.message}</p>}
         <h1>{data?.post?.title}</h1>
-        <p>{data?.post?.description}</p>
+        <p>{parse(data?.post?.description)}</p>
 
         <button onClick={handleClick}>Edit Post</button>
       </div>

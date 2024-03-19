@@ -1,7 +1,7 @@
 body {
-  background-color: #211951;
+  background-color: #292735;
   color: white;
-  padding: 5px;
+  /* padding: 5px; */
 }
 .ql-toolbar .ql-stroke {
   fill: none !important;
@@ -31,4 +31,33 @@ body {
 .quill {
   max-width: 100%;
   height: 200px;
+}
+
+/* animation effects */
+.shimmer-wrapper {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  animation: loading 2.5s infinite;
+}
+.shimmer {
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skewX(-20deg);
+  box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-150%);
+  }
+  50% {
+    transform: translateX(-60%);
+  }
+  100% {
+    transform: translateX(150%);
+  }
 }
