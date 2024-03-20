@@ -15,7 +15,7 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "leo-blog",
     format: "jpg",
-    transformation: [{ width: 500, height: 500, crop: "limit" }],
+    transformation: [{ width: 500, height: 500, crop: "pad" }],
   },
 });
 

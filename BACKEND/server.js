@@ -17,7 +17,7 @@ const port = process.env.PORT;
 app.use(express.json());
 // cors configuration
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["http://localhost:5173", "http://10.0.110.139:4000"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
 };
