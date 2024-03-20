@@ -53,13 +53,18 @@ const PostDetails = () => {
     setEditable(!editable);
   };
   return (
-    <div>
-      <div>
+    <div className="post-details m-1">
+      <div className="flex flex-col">
         {isLoading && <p>Loading...</p>}
-        {isSuccess && <p>Posts Details</p>}
+        {isSuccess && <p>Back</p>}
         {error && <p>{error.message}</p>}
-        <h1>{data?.post?.title}</h1>
-        <p>{parse(data?.post?.description)}</p>
+
+        <h1 className="text-xl text-center underline">{data?.post?.title}</h1>
+        <img src={data?.post?.image?.path} alt="post image" className="w-[100%] h-[300px] md:h-[500px] object-cover" />
+        <div className="description text-sm">
+          {typeof data?.post?.description === "string" &&
+            parse(data?.post?.description)}
+        </div>
 
         <button onClick={handleClick}>Edit Post</button>
       </div>

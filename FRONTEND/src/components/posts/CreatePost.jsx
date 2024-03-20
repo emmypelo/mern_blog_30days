@@ -89,7 +89,7 @@ const CreatePost = () => {
           id="title"
           placeholder="Title"
           {...formik.getFieldProps("title")}
-          className="flex flex-col mb-3 border-[1.5px] rounded-sm  w-full bg-transparent "
+          className={`flex flex-col mb-3 border-[1px] border-blue-300 rounded-[4px] focus:outline-none w-full bg-transparent   `}
         />
         <div className="flex justify-center items-center w-full">
           <input
@@ -126,9 +126,9 @@ const CreatePost = () => {
             </button>
           </div>
         )}
-        <div className="text-white w-[100%]">
+        <div className="text-black w-[100%]">
           <ReactQuill
-            className=""
+            className={``}
             theme="snow"
             modules={modules}
             formats={formats}
