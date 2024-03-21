@@ -31,7 +31,7 @@ const AlertMessage = ({ type, message }) => {
 
   return (
     <div
-      className={`flex items-center justify-center  w-2/5 p-1 mx-auto mt-2 ${colorClass} space-x-3`}
+      className={`flex items-center justify-center  w-3/5 p-1 mx-auto mt-2 ${colorClass} space-x-3`}
     >
       {icon}
       <span className="text-sm font-medium">{message}</span>

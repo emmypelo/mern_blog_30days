@@ -7,7 +7,7 @@ import passport from "passport";
 
 const userController = {
   createUser: asyncHandler(async (req, res) => {
-    const { name, userName, email, password, passMatch } = req.body;
+    const { name, username, email, password, passMatch } = req.body;
 
     // Check if passwords match
     if (password !== passMatch) {
@@ -16,9 +16,9 @@ const userController = {
 
     try {
       // Check if user exists
-      let userExist = await User.findOne({ $or: [{ userName }, { email }] });
+      let userExist = await User.findOne({username, email});
       if (userExist) {
-        return res.status(400).json({ error: "User already exists" });
+        return res.status(400).json({ error: `User already exists` });
       }
 
       // Hash password
@@ -27,7 +27,7 @@ const userController = {
       // Create new user
       const newUser = new User({
         name,
-        userName,
+        username,
         email,
         password: hashedPassword,
       });
@@ -66,7 +66,7 @@ const userController = {
       res.json({
         status: "success",
         message: "Login Success",
-        userName: user?.userName,
+        userName: user?.username,
         email: user?.email,
         _id: user?._id,
       });

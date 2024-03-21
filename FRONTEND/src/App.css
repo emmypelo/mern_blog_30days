@@ -96,3 +96,33 @@ ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
   width: 100vw;
   object-fit: cover;
 }
+
+
+/* OR HORIZONTAL RULE */
+
+.line-or {
+  overflow: hidden;
+  text-align: center;
+}
+
+.line-or::before,
+.line-or::after {
+  background-color: #2c54ac;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 40%;
+  
+}
+
+.line-or::before {
+  right: 0.5em;
+  margin-left: -40%;
+}
+
+.line-or::after {
+  left: 0.5em;
+  margin-right: -40%;
+}

@@ -2,3 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .form-wrapper {
+    @apply border-[1px] mt-4 border-blue-600  rounded-[4px] py-10;
+  }
+
+  .navbarLi {
+    @apply hover:text-blue-300 cursor-pointer duration-300;
+  }
+  .register-form {
+    @apply flex flex-col w-full px-5;
+  }
+  .register-form label {
+    @apply text-left;
+  }
+
+  .register-form input {
+    @apply rounded-[4px] border-blue-300 border-[1px] outline-none px-6 py-[2px];
+  }
+
+  .register-button {
+    @apply text-white bg-blue-400 border-blue-300 rounded-[16px] w-36 p-1;
+  }
+  .input-container {
+    @apply flex flex-col relative;
+  }
+
+  .form-icon {
+    @apply absolute top-[1.95rem] left-1 text-gray-400;
+  }
+
+  .navList {
+    @apply pb-1 text-xl text-white py-2 md:px-6 text-center border-b-2 md:border-b-0 hover:bg-purple-900 border-purple-900 md:hover:text-purple-600 md:hover:bg-transparent cursor-pointer;
+  }
+}

@@ -1,11 +1,23 @@
 import axios from "axios";
 
+// name, username, email, password, passMatch
 const baseUrl = "http://localhost:4000/api/users";
 // ? create User API
-export const createUserApi = async (userData) => {
-  const { data } = await axios.post(`${baseUrl}/register`, userData, {
-    withCredentials: true,
-  });
+export const registerUserApi = async (userData) => {
+  const { data } = await axios.post(
+    `${baseUrl}/register`,
+    {
+      name: userData?.name,
+      username: userData?.password,
+      email: userData?.email,
+      password: userData?.password,
+      passMatch: userData.passMatch,
+    },
+    {
+      withCredentials: true,
+    }
+  );
+
   return data;
 };
 
