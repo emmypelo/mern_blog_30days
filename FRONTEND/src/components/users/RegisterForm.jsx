@@ -7,7 +7,11 @@ import { FaUserLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
-import { registerUserApi } from "../../APIrequests/users/userAPI";
+import {
+  checkUserApi,
+  checkUsernameApi,
+  registerUserApi,
+} from "../../APIrequests/users/userAPI";
 import AlertMessage from "../Alerts/AlertMessage";
 
 const RegisterForm = () => {
@@ -26,8 +30,37 @@ const RegisterForm = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
-      username: Yup.string().required("Username is required"),
-      email: Yup.string().email().required("Email is required"),
+      username: Yup.string()
+        .required("Username is required")
+        .test("USername-exists", "Username already exists", async (value) => {
+          try {
+            const response = await checkUsernameApi(value);
+            if (response.userExist === false) {
+              return true; // Username is valid and not in the database
+            } else {
+              throw new Yup.ValidationError("Username already in database");
+            }
+          } catch (error) {
+            console.error(error);
+            return false;
+          }
+        }),
+      email: Yup.string()
+        .email("Invalid email format")
+        .required("Email is required")
+        .test("email-exists", "Email already exists", async (value) => {
+          try {
+            const response = await checkUserApi(value);
+            if (response.userExist === false) {
+              return true; // Email is valid and not in the database
+            } else {
+              throw new Yup.ValidationError("Email already in database");
+            }
+          } catch (error) {
+            console.error(error);
+            return false;
+          }
+        }),
       password: Yup.string()
         .required("Password is required")
         .oneOf([Yup.ref("passMatch")], "Passwords does not match"),
@@ -47,7 +80,6 @@ const RegisterForm = () => {
         });
     },
   });
-
   return (
     <div className="form-wrapper  text-center w-[95%] mx-auto bg-slate-100 ">
       {registerUserMutation.isPending && (
@@ -60,7 +92,8 @@ const RegisterForm = () => {
           <AlertMessage
             type={"error"}
             message={
-              registerUserMutation.error?.response?.data?.error ||registerUserMutation.error?.message
+              registerUserMutation.error?.response?.data?.error ||
+              registerUserMutation.error?.message
             }
           />
         </div>
@@ -169,10 +202,13 @@ const RegisterForm = () => {
       <div className="div">
         <p className="line-or">Or </p>
         <p>Sign in with</p>
-        <button className="register-button flex items-center mx-auto justify-center gap-2">
-          <FcGoogle />
-          Google
-        </button>
+
+        <a href="http://localhost:4000/api/users/google">
+          <button className="register-button flex items-center mx-auto justify-center gap-2">
+            <FcGoogle />
+            Google
+          </button>
+        </a>
       </div>
       <div className="div">
         <p>

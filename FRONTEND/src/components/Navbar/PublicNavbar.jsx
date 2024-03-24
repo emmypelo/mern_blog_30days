@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const PublicNavbar = () => {
-  const [userAuth, setUserAuth] =  useState(false)
+  const [userAuth, setUserAuth] = useState(false);
   return (
     <nav className="bg-[#ffffff] flex w-full items-center h-6 border-b-2 border-blue-300 p-2">
       <div className="w-1/4">
@@ -19,15 +19,17 @@ const PublicNavbar = () => {
           <Link to="/list-posts">All Post</Link>
         </li>
         <li>
-          <Link to="/list-posts">Sign In</Link>
+          <Link to="/login">Sign In</Link>
         </li>
         <li>
-          <Link to="/list-posts">Register</Link>
+          <Link to="/register">Register</Link>
         </li>
 
         {userAuth && (
           <li>
-            <Link to="/list-posts">Sign Out</Link>
+            <Link to="/logout" onClick={setUserAuth(false)}>
+              Sign Out
+            </Link>
           </li>
         )}
       </ul>

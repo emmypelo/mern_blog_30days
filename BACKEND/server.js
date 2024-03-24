@@ -1,3 +1,4 @@
+dotenv.config();
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -5,9 +6,12 @@ import mongoose from "mongoose";
 import postRouter from "./routes/posts/postRouter.js";
 import userRouter from "./routes/user/userRouter.js";
 import passport from "passport";
-import localStrategy from "./utilities/passportConfig.js";
-
-dotenv.config();
+import {
+  localStrategy,
+  jwtStrategy,
+  googleStrategy,
+} from "./utilities/passportConfig.js";
+import cookieParser from "cookie-parser";
 
 // create Express instance in app
 const app = express();
@@ -23,11 +27,14 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(passport.initialize());
+app.use(cookieParser());
 localStrategy();
+jwtStrategy();
+googleStrategy();
 
 // Routes
-app.use("/api", postRouter);
-app.use("/api", userRouter);
+app.use("/api/posts", postRouter);
+app.use("/api/users", userRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Route not fouund on the server" });

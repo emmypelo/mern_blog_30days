@@ -12,12 +12,11 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 const FetchPost = () => {
   const navigate = useNavigate();
-  // const { isLoading, isSuccess, data, error, refetch } = useQuery({
+
   const { isLoading, data, error, refetch } = useQuery({
     queryKey: ["fetchPost"],
     queryFn: fetchPostsApi,
   });
-  // console.log(data);
 
   // Delete mutation
   const deleteMutation = useMutation({

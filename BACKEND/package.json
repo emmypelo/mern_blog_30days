@@ -1,5 +1,5 @@
 {
-  "type": "module",
+"type":"module",
   "name": "blog-backend",
   "version": "1.0.0",
   "description": "A Full stack blog app using MERN",
